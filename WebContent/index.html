@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<input type="submit" value="Start" onclick="start();" />
+		<br/>
+		你说<input type="text" name="userMsg" id="userMsg" value="" />
+	</div>
+	<div id="messages"></div>
+	<script type="text/javascript">
+		var webSocket = null;
+		if ('WebSocket' in window) {
+			webSocket = new WebSocket('ws://localhost:8080/mytest/websocket');
+		} else {
+			alert('您的浏览器不支持websocket')
+		}
+		webSocket = webSocket || {};
+		console.log('@@@@@@@:' + webSocket);
+
+		webSocket.onerror = function(event) {
+			onError(event)
+		};
+
+		webSocket.onopen = function(event) {
+			onOpen(event)
+		};
+
+		webSocket.onmessage = function(event) {
+			onMessage(event)
+		};
+
+		function onMessage(event) {
+			document.getElementById('messages').innerHTML += '<br />'
+					+ event.data;
+		}
+
+		function onOpen(event) {
+			document.getElementById('messages').innerHTML = 'Connection established';
+		}
+
+		function onError(event) {
+			alert(event.data);
+		}
+
+		function start() {
+			var msg = document.getElementById('userMsg').value;
+			webSocket.send(msg);
+			return false;
+		}
+	</script>
+</body>
+</html>
