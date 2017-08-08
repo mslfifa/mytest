@@ -28,8 +28,7 @@ public class WebSocketTest {
 		}*/
 
 		// Send a final message to the client
-		session.getBasicRemote().sendText("朋友我收到你发来的信息:"+message);
-		
+		session.getBasicRemote().sendText("鎮ㄦ墍鍙戦�佹潵鐨勪俊鎭槸:"+message);
 		
 	}
 
